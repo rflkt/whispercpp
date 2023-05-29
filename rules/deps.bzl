@@ -74,7 +74,7 @@ def internal_deps():
         init_submodules = True,
         recursive_init_submodules = True,
         remote = "https://github.com/ggerganov/whisper.cpp.git",
-        commit = "2f889132c66051b14c6f8770e9b3d4e3f159821d",
+        commit = "a5defbc1b98bea0f070331ce1e8b62d947b0443d",
         shallow_since = "1678217790 +0200",
     )
 
