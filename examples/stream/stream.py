@@ -7,12 +7,21 @@ import typing as t
 import whispercpp as w
 
 
+def store_transcript_handler(ctx, n_new, data):
+    segment = ctx.full_n_segments() - n_new
+    cur_segment = ""
+    while segment < ctx.full_n_segments():
+        cur_segment = ctx.full_get_segment_text(segment)
+        data.append(cur_segment)
+        segment += 1
+    print("I'm a callback", cur_segment)
+
 def main(**kwargs: t.Any):
     kwargs.pop("list_audio_devices")
     mname = kwargs.pop("model_name", os.getenv("GGML_MODEL", "tiny.en"))
     iterator: t.Iterator[str] | None = None
     try:
-        iterator = w.Whisper.from_pretrained(mname).stream_transcribe(**kwargs)
+        iterator = w.Whisper.from_pretrained(mname).stream_transcribe(callback = store_transcript_handler, **kwargs)
     finally:
         assert iterator is not None, "Something went wrong!"
         sys.stderr.writelines(

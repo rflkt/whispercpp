@@ -228,6 +228,7 @@ class Whisper:
         self,
         device_id: int = 0,
         sample_rate: int | None = None,
+        callback: function | None = None,
         **kwargs: t.Any,
     ) -> list[str]:
         """Streaming transcription from microphone. Note that this function is blocking.
@@ -248,14 +249,17 @@ class Whisper:
         if "step_ms" not in kwargs:
             kwargs["step_ms"] = 700
 
-        if kwargs["step_ms"] < 500:
+        if kwargs["step_ms"] < 500 and kwargs["step_ms"] != 0:
             raise ValueError("step_ms must be >= 500")
 
         ac = audio.AudioCapture(kwargs["length_ms"])
         if not ac.init_device(device_id, sample_rate):
             raise RuntimeError("Failed to initialize audio capture device.")
 
-        self.params.on_new_segment(self._store_transcript_handler, self._transcript)
+        if callback:
+            self.params.on_new_segment(callback, self._transcript)
+        else:
+            self.params.on_new_segment(self._store_transcript_handler, self._transcript)
 
         try:
             ac.stream_transcribe(self.context, self.params, **kwargs)
@@ -269,6 +273,7 @@ class Whisper:
         while segment < ctx.full_n_segments():
             data.append(ctx.full_get_segment_text(segment))
             segment += 1
+
 
 
 __all__ = ["Whisper", "api", "utils", "audio"]

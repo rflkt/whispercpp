@@ -32,6 +32,7 @@ MODELS_URL = {
     model_type: f"https://huggingface.co/datasets/ggerganov/whisper.cpp/resolve/main/ggml-{model_type}.bin"
     for model_type in (
         "tiny.en",
+        "tiny.en-q5_1",
         "tiny",
         "base.en",
         "base",
