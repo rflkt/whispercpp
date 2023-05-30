@@ -3,11 +3,14 @@
 import os
 import sys
 import typing as t
-
+import time
 import whispercpp as w
 
+transcriber = w.Whisper.from_pretrained("tiny.en")
+paused = False
 
 def store_transcript_handler(ctx, n_new, data):
+    global paused
     segment = ctx.full_n_segments() - n_new
     cur_segment = ""
     while segment < ctx.full_n_segments():
@@ -15,17 +18,26 @@ def store_transcript_handler(ctx, n_new, data):
         data.append(cur_segment)
         segment += 1
     print("I'm a callback", cur_segment)
+    if "stop" in cur_segment and not paused:
+        transcriber.pause_audio()
+        paused = True
+        print("Stopping")
+        time.sleep(5)
+        transcriber.resume_audio()
+        paused = False
+        print("Resumed")
 
 def main(**kwargs: t.Any):
     kwargs.pop("list_audio_devices")
     mname = kwargs.pop("model_name", os.getenv("GGML_MODEL", "tiny.en"))
-    iterator: t.Iterator[str] | None = None
+
+    transcription: t.Iterator[str] | None = None
     try:
-        iterator = w.Whisper.from_pretrained(mname).stream_transcribe(callback = store_transcript_handler, **kwargs)
+        transcription = transcriber.stream_transcribe(callback = store_transcript_handler, **kwargs)
     finally:
-        assert iterator is not None, "Something went wrong!"
+        assert transcription is not None, "Something went wrong!"
         sys.stderr.writelines(
-            ["\nTranscription (line by line):\n"] + [f"{it}\n" for it in iterator]
+            ["\nTranscription (line by line):\n"] + [f"{it}\n" for it in transcription]
         )
         sys.stderr.flush()
 

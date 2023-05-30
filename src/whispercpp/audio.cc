@@ -388,6 +388,10 @@ int AudioCapture::stream_transcribe(Context *ctx, Params *params,
             break;
         }
 
+        if (!m_running) {
+            continue;
+        }
+
         // process new audio
         if (!use_vad) {
             while (true) {

@@ -252,8 +252,8 @@ class Whisper:
         if kwargs["step_ms"] < 500 and kwargs["step_ms"] != 0:
             raise ValueError("step_ms must be >= 500")
 
-        ac = audio.AudioCapture(kwargs["length_ms"])
-        if not ac.init_device(device_id, sample_rate):
+        self.ac = audio.AudioCapture(kwargs["length_ms"])
+        if not self.ac.init_device(device_id, sample_rate):
             raise RuntimeError("Failed to initialize audio capture device.")
 
         if callback:
@@ -262,7 +262,7 @@ class Whisper:
             self.params.on_new_segment(self._store_transcript_handler, self._transcript)
 
         try:
-            ac.stream_transcribe(self.context, self.params, **kwargs)
+            self.ac.stream_transcribe(self.context, self.params, **kwargs)
         except KeyboardInterrupt:
             # handled from C++
             pass
@@ -274,6 +274,10 @@ class Whisper:
             data.append(ctx.full_get_segment_text(segment))
             segment += 1
 
+    def pause_audio(self):
+        self.ac.pause()
 
+    def resume_audio(self):
+        self.ac.resume()
 
 __all__ = ["Whisper", "api", "utils", "audio"]
