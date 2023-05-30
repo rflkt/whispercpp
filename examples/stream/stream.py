@@ -68,7 +68,7 @@ if __name__ == "__main__":
         "--n_threads",
         type=int,
         help="Number of threads to use for decoding",
-        default=8,
+        default=3,
     )
     parser.add_argument(
         "--step_ms",
@@ -88,7 +88,8 @@ if __name__ == "__main__":
         help="Maximum number of tokens to decode",
         default=32,
     )
-    parser.add_argument("--audio_ctx", type=int, help="Audio context", default=0)
+    parser.add_argument("--audio_ctx", type=int, help="Audio context", default=512)
+
     parser.add_argument(
         "--list_audio_devices",
         action="store_true",

@@ -29,19 +29,26 @@ _data_home = environ.get(
 )
 
 MODELS_URL = {
-    model_type: f"https://huggingface.co/datasets/ggerganov/whisper.cpp/resolve/main/ggml-{model_type}.bin"
+    model_type: f"https://ggml.ggerganov.com/ggml-model-whisper-{model_type}.bin"
     for model_type in (
         "tiny.en",
         "tiny.en-q5_1",
         "tiny",
+        "tiny-q5_1",
         "base.en",
         "base",
+        "base.en-q5_1",
+        "base-q5_1",
         "small.en",
         "small",
+        "small.en-q5_1",
+        "small-q5_1",
         "medium.en",
         "medium",
-        "large-v1",
+        "medium.en-q5_1",
+        "medium-q5_1",
         "large",
+        "large-q5_1",
     )
 }
 
