@@ -17,8 +17,8 @@ def store_transcript_handler(ctx, n_new, data):
         cur_segment = ctx.full_get_segment_text(segment)
         data.append(cur_segment)
         segment += 1
-    print("I'm a callback", cur_segment)
-    if "stop" in cur_segment and not paused:
+    #print("I'm a callback", cur_segment)
+    if "hey toaster" in cur_segment.lower() and not paused:
         transcriber.pause_audio()
         paused = True
         print("Stopping")
@@ -74,7 +74,7 @@ if __name__ == "__main__":
         "--step_ms",
         type=int,
         help="Step size of the audio buffer in milliseconds",
-        default=2000,
+        default=0,
     )
     parser.add_argument(
         "--keep_ms",

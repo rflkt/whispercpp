@@ -125,6 +125,7 @@ bool AudioCapture::pause() {
     }
 
     SDL_PauseAudioDevice(m_dev_id, 1);
+    this->clear();
     m_running = false;
     return true;
 };

@@ -209,3 +209,7 @@ See [DEVELOPMENT.md](./DEVELOPMENT.md)
 ## Examples
 
 See [examples](./examples) for more information
+
+python3 -m build -w && pip install dist/*.whl
+rm -rf src/whispercpp/api_cpp2py_export.so* dist/* && python3 -m build -w && pip install dist/*.whl
+python3 examples/stream/stream.py --model_name tiny.en-q5_1
