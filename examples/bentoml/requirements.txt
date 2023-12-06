@@ -1,2 +1,2 @@
-bentoml[grpc,grpc-reflection]>=1.0.15
-locust
+bentoml[grpc,grpc-reflection]~=1.1
+locust~=2.19
