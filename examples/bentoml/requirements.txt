@@ -1,3 +1,2 @@
 bentoml[grpc,grpc-reflection]>=1.0.15
-whispercpp
 locust

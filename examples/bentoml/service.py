@@ -25,12 +25,13 @@ class WhisperCppRunnable(bentoml.Runnable):
         model_name = environ.get("GGML_MODEL", "tiny.en")
         self.model = w.Whisper.from_pretrained(model_name)
 
-    @bentoml.Runnable.method(batchable=True, batch_dim=(0, 0))
+    @bentoml.Runnable.method(batchable=False)
     def transcribe_array(self, arr: NDArray[np.float32]):
         return self.model.transcribe(arr)
 
-    @bentoml.Runnable.method(batchable=True, batch_dim=(0, 0))
+    @bentoml.Runnable.method(batchable=False)
     def transcribe_file(self, p: str):
+        p = "".join(p)
         resolved = path.expanduser(path.abspath(p))
         if not path.exists(resolved):
             raise FileNotFoundError(resolved)
