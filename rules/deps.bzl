@@ -81,9 +81,9 @@ def internal_deps():
     http_archive(
         name = "com_github_libsdl_sdl2",
         build_file = Label("//extern:sdl2.BUILD"),
-        sha256 = "e2ac043bd2b67be328f875043617b904a0bb7d277ba239fe8ac6b9c94b85cbac",
-        strip_prefix = "SDL-dca3fd8307c2c9ebda8d8ea623bbbf19649f5e22",
-        urls = ["https://github.com/libsdl-org/SDL/archive/dca3fd8307c2c9ebda8d8ea623bbbf19649f5e22.zip"],
+        sha256 = "8831f15b329c8665a66ee4c08b496b6462187833a0ce8190701e368afef1be42",
+        strip_prefix = "SDL-15ead9a40d09a1eb9972215cceac2bf29c9b77f6",
+        urls = ["https://github.com/libsdl-org/SDL/archive/15ead9a40d09a1eb9972215cceac2bf29c9b77f6.zip"],
     )
 
     git_repository(
