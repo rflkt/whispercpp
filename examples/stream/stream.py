@@ -1,46 +1,39 @@
-"""Some streaming examples."""
-
-import os
 import sys
 import typing as t
 import time
 import whispercpp as w
 
-transcriber = w.Whisper.from_pretrained("tiny.en")
-paused = False
+class StreamTranscriber:
+    def __init__(self, model_name: str):
+        self.transcriber = w.Whisper.from_pretrained(model_name)
+        self.paused = False
 
-def store_transcript_handler(ctx, n_new, data):
-    global paused
-    segment = ctx.full_n_segments() - n_new
-    cur_segment = ""
-    while segment < ctx.full_n_segments():
-        cur_segment = ctx.full_get_segment_text(segment)
-        data.append(cur_segment)
-        segment += 1
-    #print("I'm a callback", cur_segment)
-    if "hey toaster" in cur_segment.lower() and not paused:
-        transcriber.pause_audio()
-        paused = True
-        print("Stopping")
-        time.sleep(5)
-        transcriber.resume_audio()
-        paused = False
-        print("Resumed")
+    def store_transcript_handler(self, ctx, n_new, data):
+        segment = ctx.full_n_segments() - n_new
+        cur_segment = ""
+        while segment < ctx.full_n_segments():
+            cur_segment = ctx.full_get_segment_text(segment)
+            data.append(cur_segment)
+            segment += 1
+        if "hey toaster" in cur_segment.lower() and not self.paused:
+            self.transcriber.pause_audio()
+            self.paused = True
+            print("Stopping")
+            time.sleep(5)
+            self.transcriber.resume_audio()
+            self.paused = False
+            print("Resumed")
 
-def main(**kwargs: t.Any):
-    kwargs.pop("list_audio_devices")
-    mname = kwargs.pop("model_name", os.getenv("GGML_MODEL", "tiny.en"))
-
-    transcription: t.Iterator[str] | None = None
-    try:
-        transcription = transcriber.stream_transcribe(callback = store_transcript_handler, **kwargs)
-    finally:
-        assert transcription is not None, "Something went wrong!"
-        sys.stderr.writelines(
-            ["\nTranscription (line by line):\n"] + [f"{it}\n" for it in transcription]
-        )
-        sys.stderr.flush()
-
+    def main(self, **kwargs: t.Any):
+        transcription: t.Iterator[str] | None = None
+        try:
+            transcription = self.transcriber.stream_transcribe(callback=self.store_transcript_handler, **kwargs)
+        finally:
+            assert transcription is not None, "Something went wrong!"
+            sys.stderr.writelines(
+                ["\nTranscription (line by line):\n"] + [f"{it}\n" for it in transcription]
+            )
+            sys.stderr.flush()
 
 if __name__ == "__main__":
     import argparse
@@ -103,4 +96,5 @@ if __name__ == "__main__":
         w.utils.available_audio_devices()
         sys.exit(0)
 
-    main(**vars(args))
+    transcriber = StreamTranscriber(args.model_name)
+    transcriber.main(**vars(args))
