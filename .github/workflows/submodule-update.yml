@@ -5,6 +5,7 @@ name: Submodule Updates
 # Start the job on all push #
 #############################
 on:
+  workflow_dispatch:
   push:
     branches-ignore: [develop, main]
   pull_request:
