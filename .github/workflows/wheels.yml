@@ -6,7 +6,7 @@ on:
       - 'v*'
   pull_request:
     branches:
-      - main
+      - develop
 concurrency:
   group: wheels-${{ github.head_ref || github.run_id }}
   cancel-in-progress: true
