@@ -8,8 +8,6 @@ on:
   workflow_dispatch:
   push:
     branches-ignore: [develop, main]
-  pull_request:
-    branches: [develop, main]
   schedule:
     - cron: '00 12 * * 1' # Monday 12 PM UTC
     
