@@ -19,7 +19,7 @@ py_test(
         "//src/whispercpp:whispercpp_lib",
         requirement("bazel-runfiles"),
         requirement("numpy"),
-        requirement("ffmpeg-python"),
+        requirement("pydub"),
     ],
 )
 
