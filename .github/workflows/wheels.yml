@@ -2,8 +2,8 @@ name: wheels
 on:
   workflow_dispatch:
   push:
-    tags:
-      - 'v*'
+    branches:
+      - develop
   pull_request:
     branches:
       - develop
