@@ -1,34 +1,22 @@
-# whispercpp [![CI](https://github.com/aarnphm/whispercpp/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/aarnphm/whispercpp/actions/workflows/ci.yml)
+# whispercpp
 
 _Pybind11 bindings for
 [whisper.cpp](https://github.com/ggerganov/whisper.cpp.git)_
 
 ## Quickstart
 
-Install with pip:
+Install from source:
 
 ```bash
-pip install whispercpp
+pip install git+https://github.com/AIWintermuteAI/whispercpp.git -vv
 ```
-
-> NOTE: We will setup a hermetic toolchain for all platforms that doesn't have a
-> prebuilt wheels, (which means you don't have to setup anything to install the
-> Python package) which will take a bit longer to install. Pass `-vv` to `pip`
-> to see the progress.
-
-To use the latest version, install from source:
-
-```bash
-pip install git+https://github.com/aarnphm/whispercpp.git -vv
-```
-
-For local setup, initialize all submodules:
+Alternatively, git clone the develop branch of repository and initialize all submodules:
 
 ```bash
 git submodule update --init --recursive
 ```
 
-Build the wheel:
+Then build the wheel:
 
 ```bash
 # Option 1: using pypa/build
@@ -38,7 +26,7 @@ python3 -m build -w
 ./tools/bazel build //:whispercpp_wheel
 ```
 
-Install the wheel:
+Afterwards, install the wheel:
 
 ```bash
 # Option 1: via pypa/build
@@ -108,6 +96,19 @@ from whispercpp import api
 ## Development
 
 See [DEVELOPMENT.md](./DEVELOPMENT.md)
+
+### Official Builds
+
+Build Type                    | Status                                                                                                                                                                           | Note
+----------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------
+**Linux / MacOS Wheels**                 | [![Status](https://github.com/AIWintermuteAI/whispercpp/actions/workflows/wheels.yml/badge.svg?branch=develop)](https://storage.googleapis.com/tensorflow-kokoro-build-badges/ubuntu-cc.html)
+**Unit tests**      | [![Status](https://github.com/AIWintermuteAI/whispercpp/actions/workflows/ci.yml/badge.svg?branch=develop)](https://github.com/aarnphm/whispercpp/actions/workflows/ci.yml)
+
+## Examples
+
+See [examples](./examples) for more information.
+
+[![You won't believe how fast it is | Raspberry Pi Speech-to-Text](https://img.youtube.com/vi/Mfbei9I8qQc/0.jpg)](https://www.youtube.com/watch?v=Mfbei9I8qQc)
 
 ## APIs
 
@@ -205,11 +206,3 @@ See [DEVELOPMENT.md](./DEVELOPMENT.md)
 
   - This is also valid, but requires a lot of hacking and it is pretty slow
     comparing to Cython and Pybind11.
-
-## Examples
-
-See [examples](./examples) for more information
-
-python3 -m build -w && pip install dist/*.whl
-rm -rf src/whispercpp/api_cpp2py_export.so* dist/* && python3 -m build -w && pip install --force-reinstall dist/*.whl
-python3 examples/stream/stream.py --model_name tiny.en-q5_1
