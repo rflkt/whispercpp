@@ -101,8 +101,8 @@ See [DEVELOPMENT.md](./DEVELOPMENT.md)
 
 Build Type                    | Status                                                                                                                                                                           | Note
 ----------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------
-**Linux / MacOS Wheels**                 | [![Status](https://github.com/AIWintermuteAI/whispercpp/actions/workflows/wheels.yml/badge.svg?branch=develop)](https://storage.googleapis.com/tensorflow-kokoro-build-badges/ubuntu-cc.html)
-**Unit tests**      | [![Status](https://github.com/AIWintermuteAI/whispercpp/actions/workflows/ci.yml/badge.svg?branch=develop)](https://github.com/aarnphm/whispercpp/actions/workflows/ci.yml)
+**Linux / MacOS Wheels**                 | [![Status](https://github.com/AIWintermuteAI/whispercpp/actions/workflows/wheels.yml/badge.svg?branch=develop)](https://github.com/AIWintermuteAI/whispercpp/actions/workflows/wheels.yml)
+**Unit tests**      | [![Status](https://github.com/AIWintermuteAI/whispercpp/actions/workflows/ci.yml/badge.svg?branch=develop)](https://github.com/AIWintermuteAI/whispercpp/actions/workflows/ci.yml)
 
 ## Examples
 
