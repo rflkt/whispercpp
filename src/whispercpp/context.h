@@ -145,6 +145,7 @@ struct Params {
   private:
     std::shared_ptr<whisper_full_params> fp;
     std::string language;
+    std::string initial_prompt;
 
     CallbackAndContext<NewSegmentCallback> new_segment_callback;
     CallbackAndContext<ProgressCallback> progress_callback;
@@ -345,6 +346,16 @@ struct Params {
     Params *with_language(std::string language) {
         this->language = language;
         fp->language = this->language.c_str();
+        return this;
+    }
+
+    // Set initial prompt
+    // tokens to provide to the whisper decoder as initial prompt
+    // these are prepended to any existing text context from a previous call
+    // defaults to nullptr
+    Params *with_initial_prompt(std::string initial_prompt) {
+        this->initial_prompt = initial_prompt;
+        fp->initial_prompt = this->initial_prompt.c_str();
         return this;
     }
 

@@ -9,6 +9,5 @@ py_library(
     srcs = glob(["*.py"]),
     data = [
         "//:api_cpp2py_export.so",
-        "//:audio_cpp2py_export.so",
     ] + glob(["*.pyi"]),
 )

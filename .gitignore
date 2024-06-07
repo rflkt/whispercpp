@@ -136,3 +136,5 @@ bun.lockb
 *.bin
 
 src/whispercpp/__about__.py
+
+.idea/
