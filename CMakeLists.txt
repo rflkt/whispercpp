@@ -114,14 +114,14 @@ target_link_libraries(api_cpp2py_export PRIVATE whisper_commons)
 set_target_properties(api_cpp2py_export PROPERTIES BUILD_WITH_INSTALL_RPATH TRUE INSTALL_RPATH "${CMAKE_BINARY_DIR}")
 
 # Copy shared objects
-add_custom_command(TARGET audio_cpp2py_export POST_BUILD
-        COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_FILE:audio_cpp2py_export> ${CMAKE_CURRENT_SOURCE_DIR}/src/whispercpp/audio_cpp2py_export.so
-        BYPRODUCTS ${CMAKE_CURRENT_SOURCE_DIR}/src/whispercpp/audio_cpp2py_export.so
-)
-add_custom_command(TARGET api_cpp2py_export POST_BUILD
-        COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_FILE:api_cpp2py_export> ${CMAKE_CURRENT_SOURCE_DIR}/src/whispercpp/api_cpp2py_export.so
-        BYPRODUCTS ${CMAKE_CURRENT_SOURCE_DIR}/src/whispercpp/api_cpp2py_export.so
-)
+#add_custom_command(TARGET audio_cpp2py_export POST_BUILD
+#        COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_FILE:audio_cpp2py_export> ${CMAKE_CURRENT_SOURCE_DIR}/src/whispercpp/audio_cpp2py_export.so
+#        BYPRODUCTS ${CMAKE_CURRENT_SOURCE_DIR}/src/whispercpp/audio_cpp2py_export.so
+#)
+#add_custom_command(TARGET api_cpp2py_export POST_BUILD
+#        COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_FILE:api_cpp2py_export> ${CMAKE_CURRENT_SOURCE_DIR}/src/whispercpp/api_cpp2py_export.so
+#        BYPRODUCTS ${CMAKE_CURRENT_SOURCE_DIR}/src/whispercpp/api_cpp2py_export.so
+#)
 
 
 # Add Python package creation

@@ -127,12 +127,12 @@ class LazyLoader(types.ModuleType):
         """Load the module and insert it into the parent's globals."""
         # Import the target module and insert it into the parent's namespace
         try:
-            module = importlib.import_module(self.__name__)
+            module = importlib.import_module(self.__name__.split('.')[-1])
             self._parent_module_globals[self._local_name] = module
             # The additional add to sys.modules ensures library is actually loaded.
             sys.modules[self._local_name] = module
         except ModuleNotFoundError as err:
-            raise self._exc(f"{self._exc_msg} (reason: {err})") from None
+            raise self._exc(f"{self._exc_msg} (reason: {err})") from err
 
         # Emit a warning if one was specified
         if self._warning:
