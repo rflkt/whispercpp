@@ -311,14 +311,6 @@ struct Params {
     }
 
     // [EXPERIMENTAL] Speed-up techniques (can reduce the quality of output)
-    // Speed-up the audio by 2x using Phase Vocoder
-    // defaults to false
-    Params *with_speed_up(bool speed_up) {
-        fp->speed_up = speed_up;
-        return this;
-    }
-
-    // [EXPERIMENTAL] Speed-up techniques (can reduce the quality of output)
     // Overwrite the audio context size. Default to 0 to use the default value
     Params *with_audio_ctx(size_t audio_ctx) {
         fp->audio_ctx = audio_ctx;
@@ -562,8 +554,8 @@ struct Context {
     whisper_token solm_token() { return whisper_token_solm(wctx); }
     whisper_token not_token() { return whisper_token_not(wctx); }
     whisper_token beg_token() { return whisper_token_beg(wctx); }
-    whisper_token token_translate() { return whisper_token_translate(); }
-    whisper_token token_transcribe() { return whisper_token_transcribe(); }
+    whisper_token token_translate() { return whisper_token_translate(wctx); }
+    whisper_token token_transcribe() { return whisper_token_transcribe(wctx); }
     whisper_token lang_token(int lang_id) {
         return whisper_token_lang(wctx, lang_id);
     }

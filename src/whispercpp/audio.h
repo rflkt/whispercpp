@@ -1,6 +1,5 @@
 #pragma once
 
-#ifdef BAZEL_BUILD
 #include "SDL.h"
 #include "SDL_audio.h"
 #include "examples/common.h"
@@ -8,15 +7,6 @@
 #include "pybind11/numpy.h"
 #include "pybind11/pytypes.h"
 #include "whisper.h"
-#else
-#include "SDL.h"
-#include "SDL_audio.h"
-#include "examples/common.h"
-#include "pybind11/functional.h"
-#include "pybind11/numpy.h"
-#include "pybind11/pytypes.h"
-#include "whisper.h"
-#endif
 
 #include "context.h"
 #include <atomic>

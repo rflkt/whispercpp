@@ -61,9 +61,9 @@ Context Context::from_file(const char *filename, bool no_state) {
     NO_STATE_WARNING(no_state);
 
     if (no_state) {
-        c.set_context(whisper_init_from_file_no_state(filename));
+        c.set_context(whisper_init_from_file_with_params_no_state(filename, whisper_context_default_params()));
     } else {
-        c.set_context(whisper_init_from_file(filename));
+        c.set_context(whisper_init_from_file_with_params(filename, whisper_context_default_params()));
         c.set_init_with_state(true);
     }
     RAISE_IF_NULL(c.wctx);
@@ -75,9 +75,9 @@ Context Context::from_buffer(void *buffer, size_t buffer_size, bool no_state) {
     NO_STATE_WARNING(no_state);
 
     if (no_state) {
-        c.set_context(whisper_init_from_buffer_no_state(buffer, buffer_size));
+        c.set_context(whisper_init_from_buffer_with_params_no_state(buffer, buffer_size, whisper_context_default_params()));
     } else {
-        c.set_context(whisper_init_from_buffer(buffer, buffer_size));
+        c.set_context(whisper_init_from_buffer_with_params(buffer, buffer_size, whisper_context_default_params()));
         c.set_init_with_state(true);
     }
     RAISE_IF_NULL(c.wctx);
@@ -109,12 +109,12 @@ void Context::pc_to_mel(std::vector<float> &pcm, size_t threads,
 
     if (phase_vocoder && !init_with_state) {
         RAISE_IF_NULL(wstate);
-        res = whisper_pcm_to_mel_phase_vocoder_with_state(
+        res = whisper_pcm_to_mel_with_state(
             wctx, wstate, pcm.data(), pcm.size(), threads);
-    } else if (phase_vocoder && init_with_state) {
-        res = whisper_pcm_to_mel_phase_vocoder(wctx, pcm.data(), pcm.size(),
+    } else if (phase_vocoder) {
+        res = whisper_pcm_to_mel(wctx, pcm.data(), pcm.size(),
                                                threads);
-    } else if (!phase_vocoder && !init_with_state) {
+    } else if (!init_with_state) {
         RAISE_IF_NULL(wstate);
         res = whisper_pcm_to_mel_with_state(wctx, wstate, pcm.data(),
                                             pcm.size(), threads);

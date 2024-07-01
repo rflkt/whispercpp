@@ -243,7 +243,6 @@ struct whisper_default_params {
   int32_t audio_ctx    = 0;
   float vad_thold      = 0.6f;
   float freq_thold     = 100.0f;
-  bool speed_up        = false;
   bool translate       = false;
   bool print_special   = false;
   bool no_context      = true;
@@ -287,7 +286,7 @@ int AudioCapture::stream_transcribe(Context *ctx, Params *params,
     KWARGS_OR_DEFAULT(int32_t, audio_ctx);
     KWARGS_OR_DEFAULT(float, vad_thold);
     KWARGS_OR_DEFAULT(float, freq_thold);
-    KWARGS_OR_DEFAULT(bool, speed_up);
+//    KWARGS_OR_DEFAULT(bool, speed_up);
     KWARGS_OR_DEFAULT(bool, translate);
     KWARGS_OR_DEFAULT(bool, print_special);
     KWARGS_OR_DEFAULT(bool, no_context);
@@ -471,7 +470,6 @@ int AudioCapture::stream_transcribe(Context *ctx, Params *params,
                 ->with_language        (wparams.language)
                 ->with_n_threads       (wparams.n_threads)
                 ->with_audio_ctx       (wparams.audio_ctx)
-                ->with_speed_up        (wparams.speed_up)
                 ->with_temperature_inc (-1.0f) // disable temperature fallback
                 ->with_prompt_tokens   (wparams.no_context ? nullptr : prompt_tokens.data())
                 ->with_prompt_n_tokens (wparams.no_context ? 0       : prompt_tokens.size());

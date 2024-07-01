@@ -224,7 +224,6 @@ std::string Params::to_string() const {
     VALUE_REPR("max_segment_length", max_len);
     VALUE_REPR_SAME(split_on_word);
     VALUE_REPR_SAME(max_tokens);
-    VALUE_REPR_SAME(speed_up);
     VALUE_REPR_SAME(audio_ctx);
     os << "prompt_tokens=" << fp->prompt_tokens << ", ";
     VALUE_REPR("promp_num_tokens", prompt_n_tokens);
@@ -568,15 +567,6 @@ void ExportParamsApi(py::module &m) {
             [](Params &self, size_t max_tokens) {
                 WITH_DEPRECATION("max_tokens");
                 self.with_max_tokens(max_tokens);
-            })
-        // NOTE setting speed_up
-        .def("with_speed_up", &Params::with_speed_up, "speed_up"_a,
-             py::return_value_policy::reference)
-        .def_property(
-            "speed_up", [](Params &self) { return self.get()->speed_up; },
-            [](Params &self, bool speed_up) {
-                WITH_DEPRECATION("speed_up");
-                self.with_speed_up(speed_up);
             })
         // NOTE setting audio_ctx
         .def("with_audio_ctx", &Params::with_audio_ctx, "audio_ctx"_a,
