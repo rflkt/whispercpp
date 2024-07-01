@@ -26,6 +26,7 @@ classifiers = [
     "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
     "Programming Language :: Python :: Implementation :: CPython",
 ]
 dynamic = ["version"]
@@ -134,20 +135,6 @@ skip_glob = [
     "build/*",
 ]
 
-[tool.pyright]
-pythonVersion = "3.11"
-exclude = [
-    "bazel-*",
-    "extern",
-    "venv",
-    "node_modules",
-    "nix",
-    "setup.py",
-    "examples/bentoml/locustfile.py",
-]
-typeCheckingMode = "strict"
-analysis.useLibraryCodeForTypes = true
-enableTypeIgnoreComments = true
 
 [tool.cibuildwheel]
 test-requires = "pytest"

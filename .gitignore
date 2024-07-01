@@ -138,3 +138,5 @@ bun.lockb
 src/whispercpp/__about__.py
 
 .idea/
+
+**/cmake-build-debug/
