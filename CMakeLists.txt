@@ -22,28 +22,27 @@ file(GLOB HDR_FILES src/whispercpp/*.h)
 #add_library(libwhisper STATIC IMPORTED)
 
 ### WHISPER CPP
+include(GNUInstallDirs)
 include(ExternalProject)
 ExternalProject_Add(
-        git_whispercpp
+        libwhisper.so
         PREFIX ${CMAKE_CURRENT_BINARY_DIR}/libwhisper
         GIT_REPOSITORY git@github.com:ggerganov/whisper.cpp.git
         GIT_TAG v1.6.2
         GIT_SUBMODULES ""
         SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/extern/whispercpp
-#        BUILD_COMMAND #${CMAKE_COMMAND} -E env
-##        CC=${CMAKE_C_COMPILER} CXX=${CMAKE_CXX_COMPILER}
-#        make -C <SOURCE_DIR> libwhisper.so
         BUILD_COMMAND make libwhisper.so
         BUILD_IN_SOURCE TRUE
         CONFIGURE_COMMAND ""
         UPDATE_COMMAND ""
-#        INSTALL_COMMAND ""
         INSTALL_DIR ${CMAKE_BINARY_DIR}
-        INSTALL_COMMAND cp <SOURCE_DIR>/libwhisper.so <INSTALL_DIR>/libwhisper.so
-        BUILD_BYPRODUCTS <INSTALL_DIR>/libwhisper.so
+        INSTALL_COMMAND cp <SOURCE_DIR>/libwhisper.so <INSTALL_DIR>/libwhisper.so && cp <SOURCE_DIR>/libwhisper.so ${CMAKE_INSTALL_FULL_LIBDIR}/libwhisper.so
+        BUILD_BYPRODUCTS <INSTALL_DIR>/libwhisper.so ${CMAKE_INSTALL_FULL_LIBDIR}/libwhisper.so
 )
-ExternalProject_Get_Property(git_whispercpp SOURCE_DIR)
+ExternalProject_Get_Property(libwhisper.so SOURCE_DIR)
 message(STATUS "SOURCE_DIR: ${SOURCE_DIR}")
+
+message("DIR ${CMAKE_INSTALL_FULL_LIBDIR}")
 
 SET(WHISPER_INCLUDE_DIRS ${SOURCE_DIR} ${SOURCE_DIR}/examples)
 SET(WHISPER_LIB_DIR ${SOURCE_DIR})
@@ -52,7 +51,7 @@ add_library(whisper STATIC IMPORTED)
 set_property(TARGET whisper PROPERTY IMPORTED_LOCATION ${CMAKE_BINARY_DIR}/libwhisper.so)
 
 include_directories(${WHISPER_INCLUDE_DIRS})
-add_dependencies(whisper git_whispercpp)
+add_dependencies(whisper libwhisper.so)
 
 # WhisperCPP Commons
 file(GLOB WHISPER_COMMON_SRC_FILES ${SOURCE_DIR}/examples/common*.cpp)
@@ -62,7 +61,7 @@ add_library(whisper_commons STATIC
         ${WHISPER_COMMON_HDR_FILES}
 )
 target_compile_options(whisper_commons PRIVATE ${COPTS})
-add_dependencies(whisper_commons git_whispercpp)
+add_dependencies(whisper_commons libwhisper.so)
 
 
 add_library(context STATIC
