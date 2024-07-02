@@ -27,7 +27,7 @@ include(ExternalProject)
 ExternalProject_Add(
         libwhisper.so
         PREFIX ${CMAKE_CURRENT_BINARY_DIR}/libwhisper
-        GIT_REPOSITORY git@github.com:ggerganov/whisper.cpp.git
+        GIT_REPOSITORY https://github.com/ggerganov/whisper.cpp.git
         GIT_TAG v1.6.2
         GIT_SUBMODULES ""
         SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/extern/whispercpp
